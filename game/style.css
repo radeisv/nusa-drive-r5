@@ -1,0 +1,140 @@
+/* Nusa Drive — HUD and menu styling. All interface text is drawn in the DOM
+   so it stays crisp at the judge's 768x480 contact-sheet size. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0b1020;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: #fff; }
+#game-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+#hud { position: fixed; inset: 0; pointer-events: none; display: none; }
+#hud.on { display: block; }
+.panel { background: rgba(8, 12, 24, 0.72); border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px; backdrop-filter: blur(2px); }
+
+/* ---- mission panel, top left ---- */
+#mission-panel { position: absolute; top: 14px; left: 14px; width: 330px; padding: 10px 12px 11px; }
+#mission-chapter { font-size: 11px; letter-spacing: 2px; color: #ffd23e; font-weight: 700; }
+#mission-title { font-size: 19px; font-weight: 800; letter-spacing: 0.5px; margin: 2px 0 6px; }
+#mission-stagebar { height: 7px; background: rgba(255,255,255,0.18); border-radius: 4px; overflow: hidden; }
+#mission-stagefill { height: 100%; width: 75%; background: linear-gradient(90deg, #37e08b, #ffd23e); }
+#mission-objective { font-size: 13px; margin-top: 7px; line-height: 1.35; color: #eef3ff; }
+#mission-next { font-size: 12px; margin-top: 4px; color: #9fd8ff; }
+#mission-next b { color: #fff; }
+#mission-timer { position: absolute; top: 10px; right: 12px; font-size: 19px; font-weight: 800;
+  color: #ffd23e; font-variant-numeric: tabular-nums; }
+
+/* ---- police dispatch panel, left under mission ---- */
+#police-panel { position: absolute; top: 168px; left: 14px; width: 300px; padding: 9px 11px; }
+#police-panel h3 { font-size: 12px; letter-spacing: 1.5px; color: #ff5d5d; }
+#police-panel h3 span { float: right; color: #fff; }
+.police-row { display: flex; justify-content: space-between; font-size: 12.5px; padding: 3px 0;
+  border-top: 1px solid rgba(255,255,255,0.08); }
+.police-row .unit { font-weight: 700; color: #ffd23e; }
+.police-row .role { color: #cfe3ff; }
+.police-row .dist { color: #fff; font-variant-numeric: tabular-nums; }
+#police-panel.clean h3 { color: #37e08b; }
+#police-panel.clean .police-row { color: #cfe3ff; }
+
+/* ---- top right: cash, stars, rank, weapons ---- */
+#top-right { position: absolute; top: 14px; right: 14px; text-align: right; }
+#cash { font-size: 30px; font-weight: 900; color: #37e08b; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
+#stars { font-size: 26px; letter-spacing: 3px; margin-top: 2px; text-shadow: 0 2px 6px rgba(0,0,0,0.7); }
+#stars .lit { color: #ffd23e; }
+#stars .dim { color: rgba(255,255,255,0.35); }
+#wanted-label { font-size: 11px; letter-spacing: 2px; font-weight: 700; color: #ff8a5d; }
+#rank-line { margin-top: 6px; font-size: 12px; font-weight: 700; }
+#rank-line .bar { display: inline-block; width: 120px; height: 7px; background: rgba(255,255,255,0.2);
+  border-radius: 4px; overflow: hidden; vertical-align: middle; margin-left: 6px; }
+#rank-line .bar i { display: block; height: 100%; background: #37e08b; }
+#weapon-slots { display: flex; gap: 6px; justify-content: flex-end; margin-top: 9px; }
+.weapon-slot { width: 58px; padding: 6px 4px 5px; text-align: center; border-radius: 7px;
+  background: rgba(8,12,24,0.72); border: 1px solid rgba(255,255,255,0.16); }
+.weapon-slot.active { border-color: #ffd23e; box-shadow: 0 0 0 1px #ffd23e; }
+.weapon-slot .key { font-size: 10px; color: #9fd8ff; }
+.weapon-slot .name { font-size: 11px; font-weight: 800; }
+.weapon-slot .ammo { font-size: 11px; color: #ffd23e; }
+
+/* ---- crew cards, right middle ---- */
+#crew { position: absolute; top: 218px; right: 14px; display: flex; flex-direction: column; gap: 7px; }
+.crew-card { width: 196px; padding: 7px 9px; display: flex; gap: 8px; align-items: center; }
+.crew-face { width: 34px; height: 34px; border-radius: 50%; flex: none; display: flex;
+  align-items: center; justify-content: center; font-weight: 900; font-size: 15px; color: #081018; }
+.crew-card .crew-name { font-size: 13px; font-weight: 800; letter-spacing: 0.4px; }
+.crew-card .crew-role { font-size: 11px; color: #cfe3ff; }
+.crew-card .crew-key { margin-left: auto; font-size: 11px; color: #ffd23e; font-weight: 800; }
+
+/* ---- bottom left: minimap, location, vitals ---- */
+#bottom-left { position: absolute; left: 14px; bottom: 14px; }
+#minimap-wrap { position: relative; width: 168px; height: 168px; }
+#minimap { width: 168px; height: 168px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.75);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.55); background: #1c2b1a; display: block; }
+#location-label { position: absolute; left: 178px; top: 8px; width: 240px; }
+#location-name { font-size: 21px; font-weight: 900; letter-spacing: 0.5px; text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+#location-sub { font-size: 12.5px; color: #dfe9ff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+#vitals { position: absolute; left: 178px; top: 64px; width: 220px; }
+.vital { font-size: 11.5px; font-weight: 700; letter-spacing: 1px; margin-top: 5px; }
+.vital .bar { height: 8px; background: rgba(255,255,255,0.22); border-radius: 4px; overflow: hidden; margin-top: 2px; }
+.vital .bar i { display: block; height: 100%; }
+#health-fill { background: #37e08b; width: 72%; }
+#armour-fill { background: #4aa8ff; width: 55%; }
+#respect-line { margin-top: 8px; font-size: 11.5px; font-weight: 700; color: #ffe9a8; }
+
+/* ---- bottom right: speed, vehicle, radio ---- */
+#bottom-right { position: absolute; right: 16px; bottom: 14px; text-align: right; }
+#speed { font-size: 52px; font-weight: 900; line-height: 0.95; text-shadow: 0 3px 8px rgba(0,0,0,0.75);
+  font-variant-numeric: tabular-nums; }
+#speed-unit { font-size: 15px; font-weight: 700; color: #dfe9ff; }
+#vehicle-name { font-size: 15px; font-weight: 800; color: #ffd23e; margin-top: 2px; }
+#vehicle-cond { font-size: 12px; color: #fff; margin-top: 2px; }
+#vehicle-cond .bar { display: inline-block; width: 110px; height: 7px; background: rgba(255,255,255,0.22);
+  border-radius: 4px; overflow: hidden; vertical-align: middle; margin-left: 5px; }
+#vehicle-cond .bar i { display: block; height: 100%; background: #ff8a5d; }
+#radio { font-size: 12.5px; color: #ffe9a8; margin-top: 6px; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+
+/* ---- dialogue, bottom centre ---- */
+#dialogue { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
+  width: 460px; padding: 10px 12px; display: flex; gap: 10px; align-items: center; }
+#dialogue-face { width: 44px; height: 44px; border-radius: 50%; flex: none; display: flex;
+  align-items: center; justify-content: center; font-weight: 900; font-size: 17px; color: #081018; }
+#dialogue-name { font-size: 13px; font-weight: 800; color: #7de3ff; letter-spacing: 0.5px; }
+#dialogue-text { font-size: 13.5px; line-height: 1.35; color: #f2f6ff; }
+
+/* ---- toasts + crosshair + objective marker ---- */
+#toast { position: absolute; top: 88px; left: 50%; transform: translateX(-50%);
+  font-size: 19px; font-weight: 900; color: #ffd23e; text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  opacity: 0; transition: opacity 0.25s; }
+#toast.show { opacity: 1; }
+#crosshair { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px;
+  margin: -11px 0 0 -11px; display: none; }
+#crosshair::before, #crosshair::after { content: ""; position: absolute; background: #fff;
+  box-shadow: 0 0 4px #000; }
+#crosshair::before { left: 10px; top: 0; width: 2px; height: 22px; }
+#crosshair::after { left: 0; top: 10px; width: 22px; height: 2px; }
+#crosshair.on { display: block; }
+#interact { position: absolute; left: 50%; top: 58%; transform: translateX(-50%);
+  font-size: 15px; font-weight: 800; background: rgba(8,12,24,0.78); padding: 7px 12px;
+  border-radius: 7px; border: 1px solid #ffd23e; display: none; }
+#interact.on { display: block; }
+#interact b { color: #ffd23e; }
+
+/* ---- start menu ---- */
+#menu { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, rgba(10,16,34,0.55) 0%, rgba(10,16,34,0.82) 100%); z-index: 10; }
+#menu.hidden { display: none; }
+#menu-card { width: 640px; max-width: 92vw; text-align: center; padding: 30px 34px 26px;
+  background: rgba(8,12,24,0.78); border: 1px solid rgba(255,255,255,0.2); border-radius: 14px; }
+#menu-kicker { font-size: 12px; letter-spacing: 4px; color: #ffd23e; font-weight: 700; }
+#menu-title { font-size: 62px; font-weight: 900; letter-spacing: 2px; line-height: 1;
+  background: linear-gradient(90deg, #ffd23e, #ff7a3c, #ff5d5d); -webkit-background-clip: text;
+  background-clip: text; color: transparent; margin: 8px 0 4px; }
+#menu-sub { font-size: 15px; color: #dfe9ff; }
+#menu-story { font-size: 13.5px; line-height: 1.5; color: #cfe3ff; margin: 14px 0 18px; }
+.menu-btn { pointer-events: auto; cursor: pointer; display: block; width: 300px; margin: 8px auto;
+  padding: 12px 0; font-size: 17px; font-weight: 800; letter-spacing: 1px; color: #081018;
+  background: linear-gradient(90deg, #ffd23e, #ff9a3c); border: none; border-radius: 9px; }
+.menu-btn.secondary { background: rgba(255,255,255,0.14); color: #fff; border: 1px solid rgba(255,255,255,0.35); }
+.menu-btn:hover { filter: brightness(1.1); }
+#menu-controls { font-size: 12.5px; color: #9fb4d8; margin-top: 16px; line-height: 1.7; }
+#menu-controls b { color: #fff; }
+#menu-save { font-size: 12.5px; color: #7de3ff; margin-top: 8px; }
+#loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #ffd23e; background: #0b1020; z-index: 20; }
+#loading.hidden { display: none; }

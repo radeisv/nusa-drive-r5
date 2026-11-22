@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nusa Drive — Kota Nusa</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+<canvas id="game-canvas"></canvas>
+
+<div id="hud">
+  <div id="mission-panel" class="panel">
+    <div id="mission-chapter">CHAPTER 3 · STREET HEAT</div>
+    <div id="mission-title">THE BEACH RACE</div>
+    <div id="mission-timer">2:29</div>
+    <div id="mission-stagebar"><div id="mission-stagefill"></div></div>
+    <div id="mission-objective">Win the race at the pier finish line.</div>
+    <div id="mission-next">NEXT <b>Cross the finish</b></div>
+  </div>
+
+  <div id="police-panel" class="panel">
+    <h3>POLISI NUSA RESPONSE <span id="police-count">5 UNITS</span></h3>
+    <div id="police-rows"></div>
+  </div>
+
+  <div id="top-right">
+    <div id="cash">$18,450</div>
+    <div id="stars"></div>
+    <div id="wanted-label">MANHUNT — LOSE THE HEAT</div>
+    <div id="rank-line">RANK B · FIXER <span class="bar"><i id="rank-fill" style="width:74%"></i></span></div>
+    <div id="weapon-slots"></div>
+  </div>
+
+  <div id="crew">
+    <div class="crew-card panel"><div class="crew-face" style="background:#7de3ff">Z</div><div><div class="crew-name">SWAP PLATES</div><div class="crew-role">Zaki · Driver</div></div><div class="crew-key">Z</div></div>
+    <div class="crew-card panel"><div class="crew-face" style="background:#ffd23e">21</div><div><div class="crew-name">QUICK FIX</div><div class="crew-role">Lio · Mechanic</div></div><div class="crew-key">X</div></div>
+    <div class="crew-card panel"><div class="crew-face" style="background:#ff9ad5">C</div><div><div class="crew-name">EYES OUT</div><div class="crew-role">Kiki · Lookout</div></div><div class="crew-key">C</div></div>
+  </div>
+
+  <div id="bottom-left">
+    <div id="minimap-wrap">
+      <canvas id="minimap" width="336" height="336"></canvas>
+      <div id="location-label">
+        <div id="location-name">PANTAI BOULEVARD</div>
+        <div id="location-sub">Kota Nusa · Coastal District</div>
+      </div>
+      <div id="vitals">
+        <div class="vital">HEALTH <span id="health-num" style="float:right">72</span><div class="bar"><i id="health-fill"></i></div></div>
+        <div class="vital">ARMOUR <span id="armour-num" style="float:right">55</span><div class="bar"><i id="armour-fill"></i></div></div>
+        <div id="respect-line">RESPECT 3,900 / 5,200 RP</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-right">
+    <div><span id="speed">112</span> <span id="speed-unit">KM/H</span></div>
+    <div id="vehicle-name">KOMODO GT · SPORTS</div>
+    <div id="vehicle-cond">CONDITION <span id="cond-num">62%</span><span class="bar"><i id="cond-fill" style="width:62%"></i></span></div>
+    <div id="radio">♪ NUSA FM 98.4 · Sunset Surf — Ombak Rindu</div>
+  </div>
+
+  <div id="dialogue" class="panel">
+    <div id="dialogue-face" style="background:#ff9ad5">K</div>
+    <div><div id="dialogue-name">KIKI · LOOKOUT</div><div id="dialogue-text">Elang-1 is on your tail, Raka. Lose them before the pier!</div></div>
+  </div>
+
+  <div id="toast"></div>
+  <div id="crosshair"></div>
+  <div id="interact"><b>E</b> — STEAL CAR</div>
+</div>
+
+<div id="menu">
+  <div id="menu-card">
+    <div id="menu-kicker">KOTA NUSA · AN OPEN-WORLD CRIME STORY</div>
+    <div id="menu-title">NUSA DRIVE</div>
+    <div id="menu-sub">Steal it. Drive it. Outrun the heat.</div>
+    <div id="menu-story">Raka is back in Kota Nusa with empty pockets and a fast right foot.
+      Four jobs stand between him and the big harbour score — if the Polisis Nusa
+      don't catch him first. Explore the island city on foot and by car, steal
+      what you need, and watch the stars.</div>
+    <button class="menu-btn" id="btn-start">START ENGINE</button>
+    <button class="menu-btn secondary" id="btn-continue">CONTINUE — LOAD SAVE</button>
+    <div id="menu-controls">
+      <b>WASD</b> drive / walk &nbsp;·&nbsp; <b>E</b> enter &amp; steal car &nbsp;·&nbsp; <b>SPACE</b> brake<br>
+      <b>MOUSE</b> aim &nbsp;·&nbsp; <b>CLICK</b> shoot &nbsp;·&nbsp; <b>1–4</b> weapons &nbsp;·&nbsp; <b>Z/X/C</b> crew help<br>
+      <b>M</b> mission list &nbsp;·&nbsp; <b>ESC</b> pause
+    </div>
+    <div id="menu-save">Save: progress, cash and respect are kept on this machine.</div>
+  </div>
+</div>
+
+<div id="loading">STARTING KOTA NUSA…</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
