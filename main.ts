@@ -10,8 +10,11 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = dirname(fileURLToPath(import.meta.url));
 const outDir = resolve(process.env.MAKEFUN_OUTPUT_DIR ?? '/output');
 
-rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
+
+for (const sub of ['game', 'screenshots']) {
+  rmSync(join(outDir, sub), { recursive: true, force: true });
+}
 
 cpSync(join(repoRoot, 'game'), join(outDir, 'game'), { recursive: true });
 cpSync(join(repoRoot, 'screenshots'), join(outDir, 'screenshots'), { recursive: true });
